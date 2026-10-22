@@ -1,0 +1,387 @@
+/* ============================================================
+   admin.css  -  styles for the admin pages
+   Plain CSS, no framework.
+   Keep your existing index.css too (it styles the layout + sidebar).
+
+   HOW TO READ THIS FILE
+   - A rule looks like:   .name { property: value; }
+   - ".name" matches any element with className="name" in the JSX.
+   - Each section below says which page uses it.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   COLORS (change them here and the whole app changes)
+   var(--main) means "use the color saved as --main"
+   ------------------------------------------------------------ */
+:root {
+  --main: #0f766e;          /* green: buttons, bars, focus outline */
+  --main-dark: #0b5f58;     /* darker green: button hover */
+  --text-soft: #5b6b73;     /* grey text: descriptions, labels */
+  --border: #dde3e1;        /* light grey lines around cards */
+  --white: #ffffff;
+  --danger: #b42318;        /* red: delete buttons, errors */
+}
+
+
+/* ------------------------------------------------------------
+   PAGE HEADING (top of every page)
+   Used as: <div className="page-head"><h1>...</h1><p>...</p></div>
+   ------------------------------------------------------------ */
+.page-head {
+  margin-bottom: 20px;      /* space below the heading */
+}
+
+.page-head h1 {
+  margin: 0 0 4px 0;        /* top right bottom left */
+  font-size: 1.6rem;
+}
+
+.page-head p {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+
+/* ------------------------------------------------------------
+   CARD (the white box around tables and sections)
+   ------------------------------------------------------------ */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;      /* rounded corners */
+  padding: 18px;            /* space between the border and the content */
+}
+
+.card h3 {
+  margin: 0 0 14px 0;
+  font-size: 1.05rem;
+}
+
+/* A card that holds a table: no padding, and it scrolls sideways
+   on small screens if the table is too wide */
+.table-wrap {
+  padding: 0;
+  overflow-x: auto;
+}
+
+
+/* ------------------------------------------------------------
+   TOOLBAR (search box + filters + "Add" button above a table)
+   Used in: Zones, Slots, Reservations
+   ------------------------------------------------------------ */
+.toolbar {
+  display: flex;            /* put the items side by side */
+  flex-wrap: wrap;          /* move to the next line if there's no room */
+  gap: 10px;                /* space between the items */
+  margin-bottom: 14px;
+}
+
+/* Pushes the "Add slot" button to the far right */
+.toolbar .push {
+  margin-left: auto;
+}
+
+
+/* ------------------------------------------------------------
+   INPUTS AND DROPDOWNS (text boxes and <select>)
+   These rules apply to EVERY input and select in the app.
+   ------------------------------------------------------------ */
+input,
+select {
+  padding: 9px 11px;
+  border: 1px solid #c5cdd3;
+  border-radius: 6px;
+  font: inherit;            /* use the same font as the rest of the page */
+  background: var(--white);
+  color: inherit;
+}
+
+/* The outline you see when you click or tab into a field */
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--main);
+  outline-offset: 1px;
+}
+
+
+/* ------------------------------------------------------------
+   BUTTONS
+   A button can have several classes at once:
+   <button className="btn btn-primary">  -> normal button + green style
+   <button className="btn btn-sm btn-danger"> -> small + red style
+   ------------------------------------------------------------ */
+
+/* The basic button (white with a grey border) */
+.btn {
+  padding: 9px 14px;
+  border: 1px solid #c5cdd3;
+  border-radius: 6px;
+  background: var(--white);
+  font: inherit;
+  color: inherit;
+  cursor: pointer;          /* shows the hand icon on hover */
+}
+
+.btn:hover {
+  background: #eef1f0;
+}
+
+/* Green main action: "Add zone", "Save slot" */
+.btn-primary {
+  background: var(--main);
+  border-color: var(--main);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--main-dark);
+}
+
+/* Red delete button */
+.btn-danger {
+  color: var(--danger);
+  border-color: #f0c2bd;
+}
+
+.btn-danger:hover {
+  background: #fdeceb;
+}
+
+/* Smaller button: "Edit", "Delete" inside table rows */
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.875rem;
+}
+
+
+/* ------------------------------------------------------------
+   TABLES
+   Used as: <table className="data">
+   ------------------------------------------------------------ */
+table.data {
+  width: 100%;
+  border-collapse: collapse;   /* removes the gaps between cells */
+}
+
+/* th = header cell, td = normal cell */
+table.data th,
+table.data td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #edf1f0;
+  white-space: nowrap;         /* keep each cell's text on one line */
+}
+
+table.data th {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  background: #f8faf9;
+}
+
+/* No line under the very last row */
+table.data tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Small tables inside a card (the Dashboard "Recent reservations")
+   use tighter spacing */
+.card > table.data th,
+.card > table.data td {
+  padding: 10px 6px;
+}
+
+/* The cell with the Edit / Delete buttons: lined up on the right */
+td.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Message shown when a table has no rows ("No zones yet") */
+.empty {
+  padding: 28px;
+  text-align: center;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+
+/* ------------------------------------------------------------
+   STATUS BADGES (the small colored labels)
+   Used as: <span className="badge badge-reserved">reserved</span>
+   Each status has its own background and text color.
+   ------------------------------------------------------------ */
+.badge {
+  padding: 3px 10px;
+  border-radius: 999px;        /* a very big radius makes a pill shape */
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;  /* "reserved" shows as "Reserved" */
+}
+
+.badge-available {
+  background: #dcfce7;         /* light green */
+  color: #166534;
+}
+
+.badge-reserved {
+  background: #fef3c7;         /* light yellow */
+  color: #92400e;
+}
+
+.badge-occupied {
+  background: #dbeafe;         /* light blue */
+  color: #1e40af;
+}
+
+.badge-expired {
+  background: #e5e7eb;         /* light grey */
+  color: #374151;
+}
+
+.badge-cancelled {
+  background: #fee2e2;         /* light red */
+  color: #991b1b;
+}
+
+
+/* ------------------------------------------------------------
+   DASHBOARD
+   ------------------------------------------------------------ */
+
+/* The row of number boxes (Total slots, Available, ...).
+   "auto-fit" fits as many 150px+ boxes as the screen allows. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.stat strong {
+  display: block;              /* put the number on its own line */
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.stat span {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+/* Two cards side by side (Zone usage + Recent reservations).
+   On narrow screens they stack on top of each other. */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+/* One zone's row in "Zone usage" */
+.usage {
+  margin-bottom: 16px;
+}
+
+.usage-row {
+  display: flex;
+  justify-content: space-between;   /* name on the left, count on the right */
+  margin-bottom: 6px;
+  font-size: 0.92rem;
+}
+
+.usage small {
+  color: var(--text-soft);
+}
+
+/* The progress bar: .bar is the grey track,
+   the <div> inside it is the green part (its width is set in the JSX) */
+.bar {
+  height: 8px;
+  background: #e6ece9;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar > div {
+  height: 100%;
+  background: var(--main);
+}
+
+
+/* ------------------------------------------------------------
+   POP-UP FORM (Modal) used by Zones and Slots
+   ------------------------------------------------------------ */
+
+/* The dark transparent layer behind the pop-up */
+.modal-backdrop {
+  position: fixed;                  /* stays in place even when scrolling */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;                          /* top/right/bottom/left 0 = cover the whole screen */
+  background: rgba(15, 30, 28, 0.5);   /* dark green, 50% see-through */
+  display: grid;
+  place-items: center;              /* centers the pop-up on the screen */
+  padding: 16px;
+  z-index: 50;                      /* higher number = shown on top of other things */
+}
+
+/* The white pop-up box */
+.modal {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 22px;
+  width: 100%;
+  max-width: 440px;                 /* never wider than 440px */
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;   /* title left, Close button right */
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.modal-head h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+
+/* ------------------------------------------------------------
+   FORM FIELDS (inside the pop-up)
+   Used as: <label className="field">Zone name <input /></label>
+   ------------------------------------------------------------ */
+.field {
+  display: flex;
+  flex-direction: column;           /* label text on top, input below it */
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+/* The input itself is not bold, only the label text */
+.field input,
+.field select {
+  font-weight: 400;
+}
+
+/* Red message above the buttons, e.g. "Slot A-01 already exists." */
+.error {
+  color: var(--danger);
+  background: #fdeceb;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin: 0 0 14px 0;
+  font-size: 0.9rem;
+}
+
+/* Cancel + Save buttons at the bottom of the form, on the right */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
