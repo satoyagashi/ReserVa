@@ -4,13 +4,17 @@ import { query } from '../config/db.js';
 export const authController = {
   async register(req, res) {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, role } = req.body;
       if (!name || !email || !password) {
         return res.status(400).json({ error: 'Name, email, and password are required' });
       }
       if (password.length < 6) {
         return res.status(400).json({ error: 'Password must be at least 6 characters long' });
       }
+
+      // Only allow valid roles; default to 'student' for self-registration
+      const allowedRoles = ['student', 'staff', 'admin'];
+      const assignedRole = role && allowedRoles.includes(role) ? role : 'student';
 
       const existingUser = await query('SELECT id FROM users WHERE email = $1', [email.toLowerCase().trim()]);
       if (existingUser.rows.length > 0) {
@@ -19,14 +23,15 @@ export const authController = {
 
       const passwordHash = await bcrypt.hash(password, 10);
       const insertResult = await query(
-        `INSERT INTO users (name, email, password_hash)
-         VALUES ($1, $2, $3)
-         RETURNING id, name, email, created_at`,
-        [name.trim(), email.toLowerCase().trim(), passwordHash]
+        `INSERT INTO users (name, email, password_hash, role)
+         VALUES ($1, $2, $3, $4)
+         RETURNING id, name, email, role, created_at`,
+        [name.trim(), email.toLowerCase().trim(), passwordHash, assignedRole]
       );
 
       const user = insertResult.rows[0];
       req.session.userId = user.id;
+      req.session.userRole = user.role;
 
       return res.status(201).json({
         message: 'User registered successfully',
@@ -57,6 +62,7 @@ export const authController = {
       }
 
       req.session.userId = user.id;
+      req.session.userRole = user.role;
 
       return res.status(200).json({
         message: 'Logged in successfully',
@@ -64,6 +70,7 @@ export const authController = {
           id: user.id,
           name: user.name,
           email: user.email,
+          role: user.role,
           createdAt: user.created_at
         }
       });
@@ -86,7 +93,7 @@ export const authController = {
   async me(req, res) {
     try {
       const result = await query(
-        'SELECT id, name, email, created_at FROM users WHERE id = $1',
+        'SELECT id, name, email, role, created_at FROM users WHERE id = $1',
         [req.session.userId]
       );
       if (result.rows.length === 0) {

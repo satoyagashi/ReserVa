@@ -6,6 +6,10 @@ import { pool } from './config/db.js';
 import { storageService } from './services/storageService.js';
 import authRoutes from './routes/auth.js';
 import fileRoutes from './routes/files.js';
+import vehicleRoutes from './routes/vehicles.js';
+import zoneRoutes from './routes/zones.js';
+import slotRoutes from './routes/slots.js';
+import reservationRoutes from './routes/reservations.js';
 
 const PgSession = connectPgSimple(session);
 
@@ -44,6 +48,10 @@ app.use('/uploads', express.static(storageService.getUploadsDir()));
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/files', fileRoutes);
+app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/zones', zoneRoutes);
+app.use('/api/slots', slotRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
