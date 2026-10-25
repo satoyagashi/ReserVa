@@ -1,0 +1,36 @@
+import axios from 'axios'
+import './App.css'
+import { useState } from 'react'
+
+function App(){
+  const [value, setValue]= useState()
+  const [pokemon, setPokemon] = useState()
+  const url = https://pokeapi.co/api/v2/pokemon/${pokemon}
+
+  function handleButton() {
+    axios.get(url).then((response)=> {
+      setValue(response.data)
+    })
+  }
+
+  function handleInputChange(event) {
+    setPokemon(event.target.value)
+  }
+
+  return (
+    <div>
+      <input type="text" value={pokemon} onChange={handleInputChange}/>
+      <button onClick={handleButton}>
+        Fetch Button
+      </button>
+      <div>
+        <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${value?.id}.png`}/>
+        <p>Pokemon Name: {value?.name}</p>
+        <p>Pokemon ID: {value?.id}</p>        
+      </div>
+    </div>
+  )
+}
+
+export default App
+pokeapi.co
