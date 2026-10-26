@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARKWISE | Add Vehicle</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <a href="index.html" class="brand"><span class="brand-mark">P</span> PARKWISE</a>
+        <nav class="side-nav">
+            <a href="index.html" class="nav-link"><span>⌂</span> Dashboard</a>
+            <a href="my-vehicles.html" class="nav-link"><span>♧</span> My Vehicles</a>
+            <a href="add-vehicle.html" class="nav-link active"><span>▦</span> Add Vehicle</a>
+            <a href="admin-vehicle-verification.html" class="nav-link"><span>✓</span> Vehicle Verification</a>
+        </nav>
+        <div class="sidebar-bottom">
+            <div class="user-avatar">S</div>
+            <div><strong>Student</strong><small>Campus User</small></div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <a href="my-vehicles.html" class="back-link">← Back to My Vehicles</a>
+
+        <header class="top-heading">
+            <div>
+                <p class="eyebrow">VEHICLE REGISTRATION</p>
+                <h1>Add a Vehicle</h1>
+                <p class="muted">Submit your vehicle details for administrator verification.</p>
+            </div>
+        </header>
+
+        <section class="panel form-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Vehicle Information</h2>
+                    <p class="muted small">Fields marked * are required.</p>
+                </div>
+                <span class="feature-icon">＋</span>
+            </div>
+
+            <div id="formMessage" class="message" role="status" hidden></div>
+
+            <form id="vehicleForm" novalidate>
+                <div class="form-grid">
+                    <label>
+                        Vehicle Type *
+                        <select name="type" required>
+                            <option value="">Select type</option>
+                            <option>Motorcycle</option>
+                            <option>Sedan</option>
+                            <option>SUV</option>
+                            <option>Van</option>
+                            <option>Pickup</option>
+                            <option>Other</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Make / Brand *
+                        <input name="make" maxlength="50" placeholder="e.g. Toyota" required>
+                    </label>
+
+                    <label>
+                        Model *
+                        <input name="model" maxlength="50" placeholder="e.g. Vios" required>
+                    </label>
+
+                    <label>
+                        Color *
+                        <input name="color" maxlength="30" placeholder="e.g. White" required>
+                    </label>
+
+                    <label>
+                        Plate Number *
+                        <input name="plate" maxlength="15" placeholder="e.g. ABC 1234" required>
+                        <small>Letters will be converted to uppercase.</small>
+                    </label>
+
+                    <label>
+                        Registered Owner Name *
+                        <input name="owner" maxlength="100" placeholder="Name on vehicle documents" required>
+                    </label>
+
+                    <label class="full-width">
+                        Registration / OR-CR Reference *
+                        <input name="documentRef" maxlength="80" placeholder="Enter a demo reference" required>
+                        <small>Use sample data only. Do not enter real sensitive document information.</small>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <a href="my-vehicles.html" class="btn secondary">Cancel</a>
+                    <button type="submit" class="btn primary">Submit for Verification →</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="info-box">
+            <h3>What happens next?</h3>
+            <p>
+                Your vehicle will be marked Pending. An administrator reviews
+                the submitted details and either verifies the vehicle or rejects
+                it with a reason.
+            </p>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

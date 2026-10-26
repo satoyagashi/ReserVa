@@ -23,6 +23,11 @@ import Reservations from './pages/Reservations';
 import Zones from './pages/Zones';
 import Slots from './pages/Slots';
 
+// Vehicle Management Pages (Ikarii03 components)
+import AdminVehicleVerification from './pages/vehicles/AdminVehicleVerification';
+import ParkwiseMyVehicles from './pages/vehicles/ParkwiseMyVehicles';
+import AddVehicle from './pages/vehicles/AddVehicle';
+
 export default function App() {
   return (
     <ParkingProvider>
@@ -40,12 +45,18 @@ export default function App() {
           <Route element={<StudentLayout />}>
             <Route path="/find-parking" element={<FindParking />} />
             <Route path="/slots" element={<FindParking />} />
-            <Route path="/vehicles" element={<MyVehicles />} />
-            <Route path="/my-vehicles" element={<MyVehicles />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/reservations" element={<MyReservations />} />
             <Route path="/my-reservations" element={<MyReservations />} />
           </Route>
+
+          {/* Dedicated ParkWise Vehicle Management Routes (Ikarii03 teammate design) */}
+          <Route path="/vehicles" element={<ParkwiseMyVehicles />} />
+          <Route path="/my-vehicles" element={<ParkwiseMyVehicles />} />
+          <Route path="/vehicles/add" element={<AddVehicle />} />
+          <Route path="/add-vehicle" element={<AddVehicle />} />
+          <Route path="/admin/vehicles" element={<AdminVehicleVerification />} />
+          <Route path="/admin/vehicle-verification" element={<AdminVehicleVerification />} />
 
           {/* Admin Backoffice Routes */}
           <Route element={<Layout />}>

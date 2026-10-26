@@ -15,6 +15,7 @@ export default function Sidebar() {
         <NavLink to="/admin/zones">📍 Zones</NavLink>
         <NavLink to="/admin/slots">🅿️ Slots</NavLink>
         <NavLink to="/admin/reservations">📋 Reservations</NavLink>
+        <NavLink to="/admin/vehicles">🚘 Vehicle Verification</NavLink>
       </nav>
 
       <div style={{ marginTop: 'auto', paddingTop: '24px', borderTop: '1px solid #334155', display: 'flex', flexDirection: 'column', gap: '8px' }}>
