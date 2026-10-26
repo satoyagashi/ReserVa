@@ -38,7 +38,8 @@ export default function FindParking() {
 
   const handleConfirmReservation = (e) => {
     e.preventDefault();
-    setSuccessToast(`Slot ${reservingSlot.slot_code} successfully reserved for ${reservationForm.date} (${reservationForm.startTime} - ${reservationForm.endTime})!`);
+    if (!reservingSlot) return;
+    setSuccessToast(`Slot ${reservingSlot?.slot_code || ''} successfully reserved for ${reservationForm.date} (${reservationForm.startTime} - ${reservationForm.endTime})!`);
     setReservingSlot(null);
     setTimeout(() => setSuccessToast(''), 6000);
   };
@@ -195,7 +196,7 @@ export default function FindParking() {
           <div className="reserve-box" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
               <h2 style={{ margin: 0, fontSize: '1.25rem', textAlign: 'left' }}>
-                Reserve Slot {reservingSlot.slot_code}
+                Reserve Slot {reservingSlot?.slot_code}
               </h2>
               <button type="button" className="btn btn-sm" onClick={() => setReservingSlot(null)}>✕</button>
             </div>

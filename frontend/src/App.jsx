@@ -39,8 +39,11 @@ export default function App() {
           {/* Student Portal Routes */}
           <Route element={<StudentLayout />}>
             <Route path="/find-parking" element={<FindParking />} />
+            <Route path="/slots" element={<FindParking />} />
+            <Route path="/vehicles" element={<MyVehicles />} />
             <Route path="/my-vehicles" element={<MyVehicles />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/reservations" element={<MyReservations />} />
             <Route path="/my-reservations" element={<MyReservations />} />
           </Route>
 
@@ -52,11 +55,9 @@ export default function App() {
             <Route path="/admin/zones" element={<Zones />} />
             <Route path="/admin/slots" element={<Slots />} />
 
-            {/* Direct fallback routes for admin */}
+            {/* Direct fallback routes */}
             <Route path="/dashboard" element={<Navigate to="/admin" replace />} />
             <Route path="/zones" element={<Navigate to="/admin/zones" replace />} />
-            <Route path="/slots" element={<Navigate to="/admin/slots" replace />} />
-            <Route path="/reservations" element={<Navigate to="/admin/reservations" replace />} />
           </Route>
 
           {/* 404 Not Found Page */}
