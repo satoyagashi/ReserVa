@@ -1,23 +1,86 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ParkingProvider } from "./components/ParkingContext";
-import Layout from "./components/Layout";
-import Dashboard from "./pages/Dashboard";
-import Reservations from "./pages/Reservations";
-import Zones from "./pages/Zones";
-import Slots from "./pages/Slots";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ParkingProvider } from './components/ParkingContext';
+
+// Layouts
+import Layout from './components/Layout';
+import StudentLayout from './components/StudentLayout';
+
+// Public & Auth Pages
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import Landing from './pages/Landing';
+
+// Student Pages
+import FindParking from './pages/FindParking';
+import MyVehicles from './pages/MyVehicles';
+import Profile from './pages/Profile';
+import MyReservations from './pages/MyReservations';
+
+// Admin Pages
+import Dashboard from './pages/Dashboard';
+import Reservations from './pages/Reservations';
+import Zones from './pages/Zones';
+import Slots from './pages/Slots';
 
 export default function App() {
   return (
     <ParkingProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/reservations" element={<Reservations />} />
-            <Route path="/zones" element={<Zones />} />
-            <Route path="/slots" element={<Slots />} />
+          {/* Root defaults to Login / Sign In per requirements */}
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Signup />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/landing" element={<Landing />} />
+
+          {/* Student Portal Routes */}
+          <Route element={<StudentLayout />}>
+            <Route path="/find-parking" element={<FindParking />} />
+            <Route path="/my-vehicles" element={<MyVehicles />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/my-reservations" element={<MyReservations />} />
           </Route>
-          <Route path="*" element={<h1 style={{ padding: 30 }}>Page not found</h1>} />
+
+          {/* Admin Backoffice Routes */}
+          <Route element={<Layout />}>
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/reservations" element={<Reservations />} />
+            <Route path="/admin/zones" element={<Zones />} />
+            <Route path="/admin/slots" element={<Slots />} />
+
+            {/* Direct fallback routes for admin */}
+            <Route path="/dashboard" element={<Navigate to="/admin" replace />} />
+            <Route path="/zones" element={<Navigate to="/admin/zones" replace />} />
+            <Route path="/slots" element={<Navigate to="/admin/slots" replace />} />
+            <Route path="/reservations" element={<Navigate to="/admin/reservations" replace />} />
+          </Route>
+
+          {/* 404 Not Found Page */}
+          <Route
+            path="*"
+            element={
+              <div style={{ textAlign: 'center', padding: '60px 20px', fontFamily: 'sans-serif' }}>
+                <h1 style={{ fontSize: '3rem', margin: '0 0 10px 0' }}>404</h1>
+                <p style={{ color: '#64748b', marginBottom: '24px' }}>Page not found.</p>
+                <a
+                  href="/"
+                  style={{
+                    background: '#0284c7',
+                    color: '#fff',
+                    padding: '10px 20px',
+                    borderRadius: '6px',
+                    textDecoration: 'none'
+                  }}
+                >
+                  Return to Home
+                </a>
+              </div>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </ParkingProvider>
